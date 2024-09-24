@@ -24,7 +24,10 @@ async def reply_to_hi(event):
         'fanni bala daram' == message,
         'fanni bala' == message,
     ]
-    if any(conditions):
+    excluded_words = ['پایین', 'فیزیک', 'مدیریت', 'سلف مهر', 'کوی', 'تعویض', 'میخوام']
+
+    if any(conditions) and not any(word in message for word in excluded_words):
+
         reply_message = f'اس'
         await event.reply(reply_message)
 
@@ -32,6 +35,7 @@ async def reply_to_hi(event):
 
         async with event.client.conversation(user, timeout=10) as conv:
             await conv.send_message('سلام')
+
 
 async def main():
     async with TelegramClient('anon', api_id, api_hash) as client:
